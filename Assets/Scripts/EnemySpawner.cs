@@ -4,38 +4,60 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private Player _player;
+    [SerializeField] private EnemySpawnerDataScriptableObject _enemySpawnerData;
+    [SerializeField] private Transform _parent;
+    [SerializeField] private GameManager _gameManager;
+    [Header("Settings")]
     [SerializeField] private float _spawnRate = 3f;
     [SerializeField] private bool _isSpawnerActive = true;
-    [SerializeField] private EnemySpawnerDataScriptableObject _enemySpawnerData;
     [SerializeField] private List<Transform> _spawnLocations;
-    [SerializeField] private Transform _parent;
-
     private Queue<BaseEnemy> _spawnQueue;
-
-    private void Awake()
-    {
-        EnqueueEnemies();
-    }
 
     private void Start()
     {
         StartCoroutine(StartSpawner());
     }
 
-    private IEnumerator StartSpawner()
+    public IEnumerator StartSpawner()
     {
-        while (_isSpawnerActive && _spawnQueue.Count > 0)
+        EnqueueEnemies();
+        _isSpawnerActive = true;
+
+        while (_isSpawnerActive && !IsAllEnemiesSpawned())
         {
             yield return new WaitForSeconds(_spawnRate);
             SpawnEnemyFromQueue();
         }
+
+        if (IsAllEnemiesSpawned())
+        {
+            _isSpawnerActive = false;
+            StopCoroutine(StartSpawner());
+            Debug.Log("Spawner deactivated.");
+
+
+            //TODO: DELETE HERE AND IMPLEMENT TO UI (START NEXT WAVE OR SOMETHING)
+            Debug.Log("Starting next wave...");
+            _gameManager.StartNextWave();
+        }
+    }
+
+    private bool IsAllEnemiesSpawned()
+    {
+        return _spawnQueue.Count <= 0;
     }
 
     private void EnqueueEnemies()
     {
         _spawnQueue = new Queue<BaseEnemy>();
-        _enemySpawnerData.EnemyListToSpawn[0]._spawnList.ForEach(spawnList => _spawnQueue.Enqueue(spawnList._enemyPrefab));
+        _enemySpawnerData.EnemiesOfWaves[_gameManager.CurrentWave]._spawnList.ForEach(spawnList => _spawnQueue.Enqueue(spawnList._enemyPrefab));
+
+        foreach (var item in _spawnQueue)
+        {
+            Debug.Log("Queue" + item.gameObject.name);
+        }
     }
 
     private void SpawnEnemyFromQueue()

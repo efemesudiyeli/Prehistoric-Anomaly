@@ -8,7 +8,7 @@ public class Dodo : BaseEnemy
     {
         if (base.IsPlayerInAttackRange())
         {
-            base.AttackToPlayer();
+            base.Invoke(nameof(AttackToPlayer), 0.5f);
         }
         else
         {

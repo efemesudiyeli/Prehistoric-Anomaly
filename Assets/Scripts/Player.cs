@@ -27,7 +27,6 @@ public class Player : MonoBehaviour, IDamageable
         {
             Destroy(gameObject);
         }
-
     }
 
     private void Move()

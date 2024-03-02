@@ -7,7 +7,9 @@ public class WeaponSystem : MonoBehaviour
     [SerializeField] private WeaponScriptableObject _currentWeapon;
     [SerializeField] private WeaponScriptableObject[] _equipableWeapons;
     [SerializeField] private Transform _attackRadiusTransform;
+    [SerializeField] private LayerMask _enemyLayerMask;
 
+    private bool _isAttackOnCooldown = false;
     private Animator _animator;
 
     private void Awake()
@@ -28,8 +30,11 @@ public class WeaponSystem : MonoBehaviour
 
     private void Attack()
     {
+        if (_isAttackOnCooldown) return;
+
         _animator.SetTrigger("attackTrigger");
-        Collider2D[] _hitEnemies = Physics2D.OverlapCapsuleAll(_attackRadiusTransform.position, new Vector2(0.3f, 0.54f), CapsuleDirection2D.Vertical, 0);
+        Collider2D[] _hitEnemies = Physics2D.OverlapBoxAll(_attackRadiusTransform.position, new Vector3(0.6f, 0.5f, 0), 0, _enemyLayerMask);
+        StartCoroutine(AttackCooldown());
         if (_hitEnemies.Length == 0) return;
         foreach (Collider2D _hit in _hitEnemies)
         {
@@ -37,6 +42,14 @@ public class WeaponSystem : MonoBehaviour
             Debug.Log(damageable);
             damageable.GetHit(_currentWeapon.WeaponSettings.WeaponAttackDamage);
         }
+
+    }
+
+    private IEnumerator AttackCooldown()
+    {
+        _isAttackOnCooldown = true;
+        yield return new WaitForSeconds(_currentWeapon.WeaponSettings.WeaponAttackSpeed);
+        _isAttackOnCooldown = false;
     }
 
     void Update()
@@ -56,5 +69,10 @@ public class WeaponSystem : MonoBehaviour
         {
             ChangeWeapon(_equipableWeapons[1]);
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireCube(_attackRadiusTransform.position, new Vector3(0.6f, 0.5f, 0));
     }
 }

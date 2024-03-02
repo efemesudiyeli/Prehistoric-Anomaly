@@ -15,6 +15,6 @@ MonoBehaviour:
   WeaponSettings:
     WeaponName: Baby Bat
     WeaponType: 1
-    WeaponAttackDamage: 10
-    WeaponAttackSpeed: 2
+    WeaponAttackDamage: 20
+    WeaponAttackSpeed: 0.6
     AnimatorController: {fileID: 9100000, guid: 9ab05369dd533964080556765edf6434, type: 2}

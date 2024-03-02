@@ -12,8 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25c461c344bf3b34e8f4cff36fab85e3, type: 3}
   m_Name: ESDSO_0
   m_EditorClassIdentifier: 
-  EnemyListToSpawn:
+  EnemiesOfWaves:
   - _spawnList:
-    - _enemyPrefab: {fileID: 8696119371713396699, guid: 8752dff67ccb9cd4bb5b03146766c9ea, type: 3}
-    - _enemyPrefab: {fileID: 6162158603711268483, guid: 63cef117fd77ab347b2dfc6c7679ed86, type: 3}
-    - _enemyPrefab: {fileID: 8696119371713396699, guid: 8752dff67ccb9cd4bb5b03146766c9ea, type: 3}
+    - _enemyPrefab: {fileID: 6171509020125160042, guid: 3d08af2d30bbb2547a714b071902daf0, type: 3}
+    - _enemyPrefab: {fileID: 5204202652798104193, guid: f4a40fc3668dba64eb05d89c335b07a2, type: 3}
+    - _enemyPrefab: {fileID: 5204202652798104193, guid: f4a40fc3668dba64eb05d89c335b07a2, type: 3}
+    - _enemyPrefab: {fileID: 5204202652798104193, guid: f4a40fc3668dba64eb05d89c335b07a2, type: 3}
+    - _enemyPrefab: {fileID: 5204202652798104193, guid: f4a40fc3668dba64eb05d89c335b07a2, type: 3}
+  - _spawnList:
+    - _enemyPrefab: {fileID: 6171509020125160042, guid: 3d08af2d30bbb2547a714b071902daf0, type: 3}
+    - _enemyPrefab: {fileID: 6171509020125160042, guid: 3d08af2d30bbb2547a714b071902daf0, type: 3}
+    - _enemyPrefab: {fileID: 6171509020125160042, guid: 3d08af2d30bbb2547a714b071902daf0, type: 3}
+    - _enemyPrefab: {fileID: 6171509020125160042, guid: 3d08af2d30bbb2547a714b071902daf0, type: 3}
+    - _enemyPrefab: {fileID: 6171509020125160042, guid: 3d08af2d30bbb2547a714b071902daf0, type: 3}

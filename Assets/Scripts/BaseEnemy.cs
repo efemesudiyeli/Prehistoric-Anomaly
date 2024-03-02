@@ -14,7 +14,6 @@ public abstract class BaseEnemy : MonoBehaviour, IDamageable
     private IDamageable _damageable;
 
 
-
     private void Start()
     {
         if (Player != null)
@@ -28,7 +27,7 @@ public abstract class BaseEnemy : MonoBehaviour, IDamageable
         _health -= attackDamage;
         if (_health <= 0)
         {
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
     }
 
@@ -55,7 +54,8 @@ public abstract class BaseEnemy : MonoBehaviour, IDamageable
         //? Maybe remove Mathf.Sign for smoothing.
         direction.x = Mathf.Sign(Mathf.Clamp(direction.x, -1f, 1f));
         direction.y = 0;
-        transform.Translate(_moveSpeed * Time.deltaTime * direction);
+        FlipSpriteToDirection(direction.x);
+        transform.Translate(_moveSpeed * Time.deltaTime * direction, Space.World);
     }
 
     protected IEnumerator AttackCooldown()
@@ -63,5 +63,17 @@ public abstract class BaseEnemy : MonoBehaviour, IDamageable
         _isAttackOnCooldown = true;
         yield return new WaitForSeconds(_attackRate);
         _isAttackOnCooldown = false;
+    }
+
+    private void FlipSpriteToDirection(float horizontalDirection)
+    {
+        if (horizontalDirection > 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+        else if (horizontalDirection < 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
     }
 }
