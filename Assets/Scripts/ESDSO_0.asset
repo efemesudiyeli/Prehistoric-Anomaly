@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25c461c344bf3b34e8f4cff36fab85e3, type: 3}
+  m_Name: ESDSO_0
+  m_EditorClassIdentifier: 
+  EnemyListToSpawn:
+  - _spawnList:
+    - _enemyPrefab: {fileID: 8696119371713396699, guid: 8752dff67ccb9cd4bb5b03146766c9ea, type: 3}
+    - _enemyPrefab: {fileID: 6162158603711268483, guid: 63cef117fd77ab347b2dfc6c7679ed86, type: 3}
+    - _enemyPrefab: {fileID: 8696119371713396699, guid: 8752dff67ccb9cd4bb5b03146766c9ea, type: 3}
