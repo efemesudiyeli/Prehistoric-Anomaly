@@ -9,6 +9,7 @@ public class Player : MonoBehaviour, IDamageable
     private Animator _animator;
     [SerializeField] private UIController _uiController;
 
+
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -16,7 +17,10 @@ public class Player : MonoBehaviour, IDamageable
 
     void Update()
     {
-        Move();
+        if (GameManager.Instance.IsInputsEnabled)
+        {
+            Move();
+        }
     }
 
     public void GetHit(float attackDamage)

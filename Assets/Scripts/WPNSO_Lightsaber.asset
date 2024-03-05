@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 50d853b4b2981ef44a37793e494a2f19, type: 3}
-  m_Name: WPNSO_Bat
+  m_Name: WPNSO_Lightsaber
   m_EditorClassIdentifier: 
   WeaponSettings:
-    WeaponName: Baby Bat
-    WeaponType: 1
-    WeaponAttackDamage: 20
-    WeaponAttackSpeed: 0.6
-    WeaponKnockbackPower: 1
+    WeaponName: Lightsaber
+    WeaponType: 3
+    WeaponAttackDamage: 30
+    WeaponAttackSpeed: 0.3
+    WeaponKnockbackPower: 0.1
     AnimatorController: {fileID: 9100000, guid: 9ab05369dd533964080556765edf6434, type: 2}

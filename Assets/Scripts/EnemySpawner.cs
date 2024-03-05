@@ -9,12 +9,14 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private EnemySpawnerDataScriptableObject _enemySpawnerData;
     [SerializeField] private Transform _parent;
     [SerializeField] private GameManager _gameManager;
+    [SerializeField] private HitReceiveFlashEffect _hitReceiver;
     [Header("Settings")]
     [SerializeField] private float _spawnRate = 3f;
     [SerializeField] private bool _isSpawnerActive = true;
     [SerializeField] private List<Transform> _spawnLocations;
     private Queue<BaseEnemy> _spawnQueue;
-
+    private int _firstWaveEnemyCount;
+    private int _currentDeadEnemyOnFirstWave;
     private void Start()
     {
         StartCoroutine(StartSpawner());
@@ -22,8 +24,8 @@ public class EnemySpawner : MonoBehaviour
 
     public IEnumerator StartSpawner()
     {
-        EnqueueEnemies();
         _isSpawnerActive = true;
+        EnqueueEnemies();
 
         while (_isSpawnerActive && !IsAllEnemiesSpawned())
         {
@@ -36,11 +38,6 @@ public class EnemySpawner : MonoBehaviour
             _isSpawnerActive = false;
             StopCoroutine(StartSpawner());
             Debug.Log("Spawner deactivated.");
-
-
-            //TODO: DELETE HERE AND IMPLEMENT TO UI (START NEXT WAVE OR SOMETHING)
-            Debug.Log("Starting next wave...");
-            _gameManager.StartNextWave();
         }
     }
 
@@ -54,9 +51,14 @@ public class EnemySpawner : MonoBehaviour
         _spawnQueue = new Queue<BaseEnemy>();
         _enemySpawnerData.EnemiesOfWaves[_gameManager.CurrentWave]._spawnList.ForEach(spawnList => _spawnQueue.Enqueue(spawnList._enemyPrefab));
 
-        foreach (var item in _spawnQueue)
+        AssignEnemyCountOnFirstWave();
+    }
+
+    private void AssignEnemyCountOnFirstWave()
+    {
+        if (_firstWaveEnemyCount == 0)
         {
-            Debug.Log("Queue" + item.gameObject.name);
+            _firstWaveEnemyCount = _spawnQueue.Count;
         }
     }
 
@@ -66,6 +68,22 @@ public class EnemySpawner : MonoBehaviour
         Transform _randomSpawnLocation = _spawnLocations[Random.Range(0, _spawnLocations.Count)];
         BaseEnemy _newEnemy = Instantiate(_enemy, _randomSpawnLocation.position, _enemy.gameObject.transform.rotation, _parent);
         _newEnemy.Player = _player;
+        _newEnemy.HitReceiver = _hitReceiver;
+
+        PlayCutsceneAfterTutorial(_newEnemy);
+
         _spawnQueue.Dequeue();
+    }
+
+    private void PlayCutsceneAfterTutorial(BaseEnemy _newEnemy)
+    {
+        _newEnemy.OnDie += () =>
+               {
+                   _currentDeadEnemyOnFirstWave++;
+                   if (_currentDeadEnemyOnFirstWave == _firstWaveEnemyCount)
+                   {
+                       _gameManager.StartFirstTimelineOnce();
+                   }
+               };
     }
 }

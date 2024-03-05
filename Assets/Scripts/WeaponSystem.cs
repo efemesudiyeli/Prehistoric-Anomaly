@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class WeaponSystem : MonoBehaviour
 {
-    [SerializeField] private WeaponScriptableObject _currentWeapon;
+    [SerializeField] public WeaponScriptableObject _currentWeapon;
     [SerializeField] private WeaponScriptableObject[] _equipableWeapons;
     [SerializeField] private Transform _attackRadiusTransform;
     [SerializeField] private LayerMask _enemyLayerMask;
+    [SerializeField] private Vector2 _attackColliderSize = new Vector2(1f, 0.5f);
 
     private bool _isAttackOnCooldown = false;
     private Animator _animator;
+    private bool _isLightsaberEquipped = false;
 
     private void Awake()
     {
@@ -25,16 +27,19 @@ public class WeaponSystem : MonoBehaviour
     private void ChangeWeapon(WeaponScriptableObject newWeapon)
     {
         _currentWeapon = newWeapon;
-        _animator.runtimeAnimatorController = _currentWeapon.WeaponSettings.AnimatorController;
+    }
+
+    private void TryAttack()
+    {
+        if (_isAttackOnCooldown) return;
+        _animator.SetTrigger("attackTrigger");
+        StartCoroutine(AttackCooldown());
     }
 
     private void Attack()
     {
-        if (_isAttackOnCooldown) return;
+        Collider2D[] _hitEnemies = Physics2D.OverlapBoxAll(_attackRadiusTransform.position, _attackColliderSize, 0, _enemyLayerMask);
 
-        _animator.SetTrigger("attackTrigger");
-        Collider2D[] _hitEnemies = Physics2D.OverlapBoxAll(_attackRadiusTransform.position, new Vector3(0.6f, 0.5f, 0), 0, _enemyLayerMask);
-        StartCoroutine(AttackCooldown());
         if (_hitEnemies.Length == 0) return;
         foreach (Collider2D _hit in _hitEnemies)
         {
@@ -42,7 +47,6 @@ public class WeaponSystem : MonoBehaviour
             Debug.Log(damageable);
             damageable.GetHit(_currentWeapon.WeaponSettings.WeaponAttackDamage);
         }
-
     }
 
     private IEnumerator AttackCooldown()
@@ -55,24 +59,21 @@ public class WeaponSystem : MonoBehaviour
     void Update()
     {
         // Attack Input
-        if (Input.GetKeyDown(KeyCode.Mouse0) && _currentWeapon.IsWeaponEquipped())
+        if (Input.GetKeyDown(KeyCode.Mouse0) && GameManager.Instance.IsInputsEnabled && _currentWeapon.IsWeaponEquipped())
         {
-            Attack();
+            TryAttack();
         }
 
-        // Change Weapon Inputs
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (GameManager.Instance.GameState == GameManager.GameStates.GAMEPLAY && _isLightsaberEquipped == false)
         {
-            ChangeWeapon(_equipableWeapons[0]);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
+            _isLightsaberEquipped = true;
             ChangeWeapon(_equipableWeapons[1]);
         }
+
     }
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.DrawWireCube(_attackRadiusTransform.position, new Vector3(0.6f, 0.5f, 0));
+        Gizmos.DrawWireCube(_attackRadiusTransform.position, _attackColliderSize);
     }
 }

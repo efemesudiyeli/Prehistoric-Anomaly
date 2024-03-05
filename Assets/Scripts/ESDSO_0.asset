@@ -14,14 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemiesOfWaves:
   - _spawnList:
-    - _enemyPrefab: {fileID: 6171509020125160042, guid: 3d08af2d30bbb2547a714b071902daf0, type: 3}
-    - _enemyPrefab: {fileID: 5204202652798104193, guid: f4a40fc3668dba64eb05d89c335b07a2, type: 3}
     - _enemyPrefab: {fileID: 5204202652798104193, guid: f4a40fc3668dba64eb05d89c335b07a2, type: 3}
     - _enemyPrefab: {fileID: 5204202652798104193, guid: f4a40fc3668dba64eb05d89c335b07a2, type: 3}
     - _enemyPrefab: {fileID: 5204202652798104193, guid: f4a40fc3668dba64eb05d89c335b07a2, type: 3}
   - _spawnList:
+    - _enemyPrefab: {fileID: 5204202652798104193, guid: f4a40fc3668dba64eb05d89c335b07a2, type: 3}
+    - _enemyPrefab: {fileID: 5204202652798104193, guid: f4a40fc3668dba64eb05d89c335b07a2, type: 3}
     - _enemyPrefab: {fileID: 6171509020125160042, guid: 3d08af2d30bbb2547a714b071902daf0, type: 3}
+    - _enemyPrefab: {fileID: 5204202652798104193, guid: f4a40fc3668dba64eb05d89c335b07a2, type: 3}
+    - _enemyPrefab: {fileID: 5204202652798104193, guid: f4a40fc3668dba64eb05d89c335b07a2, type: 3}
+    - _enemyPrefab: {fileID: 5204202652798104193, guid: f4a40fc3668dba64eb05d89c335b07a2, type: 3}
     - _enemyPrefab: {fileID: 6171509020125160042, guid: 3d08af2d30bbb2547a714b071902daf0, type: 3}
+  - _spawnList:
+    - _enemyPrefab: {fileID: 5204202652798104193, guid: f4a40fc3668dba64eb05d89c335b07a2, type: 3}
+    - _enemyPrefab: {fileID: 5204202652798104193, guid: f4a40fc3668dba64eb05d89c335b07a2, type: 3}
     - _enemyPrefab: {fileID: 6171509020125160042, guid: 3d08af2d30bbb2547a714b071902daf0, type: 3}
-    - _enemyPrefab: {fileID: 6171509020125160042, guid: 3d08af2d30bbb2547a714b071902daf0, type: 3}
+    - _enemyPrefab: {fileID: 5204202652798104193, guid: f4a40fc3668dba64eb05d89c335b07a2, type: 3}
+    - _enemyPrefab: {fileID: 5204202652798104193, guid: f4a40fc3668dba64eb05d89c335b07a2, type: 3}
+    - _enemyPrefab: {fileID: 5204202652798104193, guid: f4a40fc3668dba64eb05d89c335b07a2, type: 3}
     - _enemyPrefab: {fileID: 6171509020125160042, guid: 3d08af2d30bbb2547a714b071902daf0, type: 3}

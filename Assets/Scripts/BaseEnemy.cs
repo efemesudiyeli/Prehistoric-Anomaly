@@ -1,23 +1,37 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public abstract class BaseEnemy : MonoBehaviour, IDamageable
 {
     public Player Player;
+    public HitReceiveFlashEffect HitReceiver;
     [SerializeField] private float _health = 100f;
     [SerializeField] private float _attackDamage = 5f;
     [SerializeField] private float _attackRate = 1f;
     [SerializeField] private float _attackRange = 0.5f;
     [SerializeField] private float _moveSpeed = 0.5f;
+    [SerializeField] private Animator _animator;
+    [SerializeField] private SpriteRenderer _spriteRenderer;
     private bool _isAttackOnCooldown = false;
     private IDamageable _damageable;
+    private Rigidbody2D _rigidbody2d;
+    private WeaponSystem _weaponSystem;
 
+    public event Action OnDie;
+
+    private void Awake()
+    {
+        _rigidbody2d = GetComponent<Rigidbody2D>();
+    }
 
     private void Start()
     {
         if (Player != null)
         {
+            _weaponSystem = Player.GetComponent<WeaponSystem>();
             _damageable = Player.GetComponent<IDamageable>();
         }
     }
@@ -25,16 +39,31 @@ public abstract class BaseEnemy : MonoBehaviour, IDamageable
     public void GetHit(float attackDamage)
     {
         _health -= attackDamage;
+        GetKnockback();
+        HitReceiver.GetFlashEffect(_spriteRenderer);
         if (_health <= 0)
         {
-            Destroy(this.gameObject);
+            Die();
         }
+    }
+
+    private void Die()
+    {
+        OnDie?.Invoke();
+        Destroy(this.gameObject, 0.1f);
+    }
+
+    private void GetKnockback()
+    {
+        Vector2 direction = new Vector2(Player.transform.position.x - transform.position.x, -1);
+        _rigidbody2d.AddForce(-direction * _weaponSystem._currentWeapon.WeaponSettings.WeaponKnockbackPower, ForceMode2D.Impulse);
     }
 
     protected void AttackToPlayer()
     {
         if (Player == null || _isAttackOnCooldown) return;
 
+        _animator.SetTrigger("attackTrigger");
         _damageable.GetHit(_attackDamage);
         StartCoroutine(AttackCooldown());
     }
