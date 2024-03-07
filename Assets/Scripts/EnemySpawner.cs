@@ -16,7 +16,8 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private List<Transform> _spawnLocations;
     private Queue<BaseEnemy> _spawnQueue;
     private int _firstWaveEnemyCount;
-    private int _currentDeadEnemyOnFirstWave;
+    private int _deadEnemyCount = 0;
+    public int CurrentWave { get; private set; } = 0;
     private void Start()
     {
         StartCoroutine(StartSpawner());
@@ -26,6 +27,7 @@ public class EnemySpawner : MonoBehaviour
     {
         _isSpawnerActive = true;
         EnqueueEnemies();
+        Debug.Log("Starting wave " + CurrentWave + " with " + _enemySpawnerData.EnemiesOfWaves[CurrentWave]._spawnList.Count + " enemies.");
 
         while (_isSpawnerActive && !IsAllEnemiesSpawned())
         {
@@ -46,10 +48,24 @@ public class EnemySpawner : MonoBehaviour
         return _spawnQueue.Count <= 0;
     }
 
+    public void StartNextWave()
+    {
+        if (_enemySpawnerData.EnemiesOfWaves.Length - 1 <= CurrentWave)
+        {
+            Debug.Log("Can't start next wave. All waves completed.");
+            //TODO: PLAY FINAL CUTSCENE 
+        }
+        else
+        {
+            CurrentWave++;
+            StartCoroutine(StartSpawner());
+        }
+    }
+
     private void EnqueueEnemies()
     {
         _spawnQueue = new Queue<BaseEnemy>();
-        _enemySpawnerData.EnemiesOfWaves[_gameManager.CurrentWave]._spawnList.ForEach(spawnList => _spawnQueue.Enqueue(spawnList._enemyPrefab));
+        _enemySpawnerData.EnemiesOfWaves[CurrentWave]._spawnList.ForEach(spawnList => _spawnQueue.Enqueue(spawnList._enemyPrefab));
 
         AssignEnemyCountOnFirstWave();
     }
@@ -69,20 +85,26 @@ public class EnemySpawner : MonoBehaviour
         BaseEnemy _newEnemy = Instantiate(_enemy, _randomSpawnLocation.position, _enemy.gameObject.transform.rotation, _parent);
         _newEnemy.Player = _player;
         _newEnemy.HitReceiver = _hitReceiver;
-
-        PlayCutsceneAfterTutorial(_newEnemy);
-
+        TrackDeadEnemiesForNextWave(_newEnemy);
         _spawnQueue.Dequeue();
     }
 
-    private void PlayCutsceneAfterTutorial(BaseEnemy _newEnemy)
+    private void TrackDeadEnemiesForNextWave(BaseEnemy _newEnemy)
     {
         _newEnemy.OnDie += () =>
                {
-                   _currentDeadEnemyOnFirstWave++;
-                   if (_currentDeadEnemyOnFirstWave == _firstWaveEnemyCount)
+                   _deadEnemyCount++;
+                   //Debug.Log("deadenemycount: " + _deadEnemyCount + "total enemy count: " + _enemySpawnerData.EnemiesOfWaves[CurrentWave]._spawnList.Count);
+                   if (CurrentWave == 0 && _deadEnemyCount == _firstWaveEnemyCount)
                    {
                        _gameManager.StartFirstTimelineOnce();
+                       _deadEnemyCount = 0;
+                   }
+                   else if (_deadEnemyCount == _enemySpawnerData.EnemiesOfWaves[CurrentWave]._spawnList.Count)
+                   {
+                       Debug.Log("Next wave started.");
+                       _deadEnemyCount = 0;
+                       StartNextWave();
                    }
                };
     }

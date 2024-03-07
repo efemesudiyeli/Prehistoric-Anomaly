@@ -15,7 +15,6 @@ MonoBehaviour:
   WeaponSettings:
     WeaponName: Lightsaber
     WeaponType: 3
-    WeaponAttackDamage: 30
+    WeaponAttackDamage: 50
     WeaponAttackSpeed: 0.3
     WeaponKnockbackPower: 0.1
-    AnimatorController: {fileID: 9100000, guid: 9ab05369dd533964080556765edf6434, type: 2}

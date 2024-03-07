@@ -12,6 +12,7 @@ public class WeaponSystem : MonoBehaviour
 
     private bool _isAttackOnCooldown = false;
     private Animator _animator;
+    private bool _isBatEquipped = true;
     private bool _isLightsaberEquipped = false;
 
     private void Awake()
@@ -44,7 +45,6 @@ public class WeaponSystem : MonoBehaviour
         foreach (Collider2D _hit in _hitEnemies)
         {
             _hit.TryGetComponent(out IDamageable damageable);
-            Debug.Log(damageable);
             damageable.GetHit(_currentWeapon.WeaponSettings.WeaponAttackDamage);
         }
     }
@@ -66,7 +66,10 @@ public class WeaponSystem : MonoBehaviour
 
         if (GameManager.Instance.GameState == GameManager.GameStates.GAMEPLAY && _isLightsaberEquipped == false)
         {
+            _isBatEquipped = false;
             _isLightsaberEquipped = true;
+            _animator.SetBool("isBatEquipped", _isBatEquipped);
+            _animator.SetBool("isLightsaberEquipped", _isLightsaberEquipped);
             ChangeWeapon(_equipableWeapons[1]);
         }
 

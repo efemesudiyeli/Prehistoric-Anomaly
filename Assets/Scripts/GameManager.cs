@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,7 +13,6 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(this.gameObject);
         }
         else
         {
@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private EnemySpawner _enemySpawner;
     [SerializeField] private EnemySpawnerDataScriptableObject _enemySpawnerData;
     [SerializeField] private PlayableDirector _firstTimeline;
-    public int CurrentWave { get; private set; } = 0;
+
     public bool IsInputsEnabled { get; set; } = true;
 
     public enum GameStates
@@ -38,28 +38,24 @@ public class GameManager : MonoBehaviour
         _firstTimeline.stopped += (PlayableDirector director) =>
                {
                    IsInputsEnabled = true;
-                   StartNextWave();
+                   _enemySpawner.StartNextWave();
                };
     }
 
-    public void StartNextWave()
+    public void StartGame()
     {
-        if (_enemySpawnerData.EnemiesOfWaves.Length - 1 <= CurrentWave)
-        {
-            Debug.Log("Can't start next wave. All waves completed.");
-        }
-        else
-        {
-            CurrentWave++;
-            StartCoroutine(_enemySpawner.StartSpawner());
-        }
+        SceneManager.LoadScene(1);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 
     public void StartFirstTimelineOnce()
     {
         if (GameState == GameStates.TUTORIAL)
         {
-            Debug.Log("Start first timeline.");
             _firstTimeline.Play();
             IsInputsEnabled = false;
             GameState = GameStates.GAMEPLAY;

@@ -64,7 +64,15 @@ public abstract class BaseEnemy : MonoBehaviour, IDamageable
         if (Player == null || _isAttackOnCooldown) return;
 
         _animator.SetTrigger("attackTrigger");
-        _damageable.GetHit(_attackDamage);
+
+        if (Vector2.Distance(transform.position, Player.transform.position) <= _attackRange)
+        {
+            _damageable.GetHit(_attackDamage);
+        }
+        else
+        {
+            Debug.Log("Player dodged");
+        }
         StartCoroutine(AttackCooldown());
     }
 

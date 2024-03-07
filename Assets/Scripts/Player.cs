@@ -8,10 +8,13 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private float _moveSpeed = 2f;
     private Animator _animator;
     [SerializeField] private UIController _uiController;
+    [SerializeField] private HitReceiveFlashEffect _hitReceiver;
+    private SpriteRenderer _spriteRenderer;
 
 
     private void Awake()
     {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
     }
 
@@ -27,11 +30,13 @@ public class Player : MonoBehaviour, IDamageable
     {
         _health -= attackDamage;
         _uiController.SetHealth(_health);
+        _hitReceiver.GetFlashEffect(_spriteRenderer);
         if (_health <= 0)
         {
             Destroy(gameObject);
         }
     }
+
 
     private void Move()
     {
