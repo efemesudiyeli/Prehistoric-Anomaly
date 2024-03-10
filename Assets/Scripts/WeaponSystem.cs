@@ -14,6 +14,7 @@ public class WeaponSystem : MonoBehaviour
     private Animator _animator;
     private bool _isBatEquipped = true;
     private bool _isLightsaberEquipped = false;
+    private bool _isBowEquipped = false;
 
     private void Awake()
     {
@@ -47,6 +48,13 @@ public class WeaponSystem : MonoBehaviour
             _hit.TryGetComponent(out IDamageable damageable);
             damageable.GetHit(_currentWeapon.WeaponSettings.WeaponAttackDamage);
         }
+    }
+
+    private void RangedAttack()
+    {
+
+       Instantiate( _currentWeapon.WeaponSettings.WeaponProjectile, _attackRadiusTransform.position, _attackRadiusTransform.rotation);
+
     }
 
     private IEnumerator AttackCooldown()

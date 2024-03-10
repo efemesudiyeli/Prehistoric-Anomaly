@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "acerola0.sln"
+    "dotnet.defaultSolution": "Prehistoric-Anomaly.sln"
 }

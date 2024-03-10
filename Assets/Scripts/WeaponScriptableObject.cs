@@ -27,7 +27,7 @@ public class WeaponScriptableObject : ScriptableObject
         {
             EMPTY,
             BAT,
-            AXE,
+            BOW,
             LIGHTSABER,
         }
 
@@ -36,6 +36,7 @@ public class WeaponScriptableObject : ScriptableObject
         public float WeaponAttackDamage;
         public float WeaponAttackSpeed;
         public float WeaponKnockbackPower;
+        public GameObject WeaponProjectile;
 
     }
 }
