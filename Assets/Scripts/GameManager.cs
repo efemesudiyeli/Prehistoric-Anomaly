@@ -28,10 +28,14 @@ public class GameManager : MonoBehaviour
 
     public enum GameStates
     {
-        TUTORIAL,
-        GAMEPLAY,
+        BAT,
+        BOW,
+        AK47,
+        RPG,
+        LIGHTSABER,
+        ATOMICBOMB,
     }
-    public GameStates GameState { get; private set; } = GameStates.TUTORIAL;
+    public GameStates GameState { get; private set; } = GameStates.BAT;
 
     private void OnEnable()
     {
@@ -54,11 +58,11 @@ public class GameManager : MonoBehaviour
 
     public void StartFirstTimelineOnce()
     {
-        if (GameState == GameStates.TUTORIAL)
+        if (GameState == GameStates.BAT)
         {
             _firstTimeline.Play();
             IsInputsEnabled = false;
-            GameState = GameStates.GAMEPLAY;
+            GameState = GameStates.BOW;
         }
     }
 }

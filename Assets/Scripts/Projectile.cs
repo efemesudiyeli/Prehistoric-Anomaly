@@ -15,7 +15,6 @@ public class Projectile : MonoBehaviour
 
     private void DestroyProjectile() {
         Destroy(gameObject);
-        Debug.Log("Destoryed Projectile");
     }
 
       private void OnTriggerEnter2D(Collider2D other) {

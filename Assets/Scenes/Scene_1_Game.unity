@@ -241,9 +241,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03de012f5674eac48bf2f585ccbb430e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentWeapon: {fileID: 11400000, guid: 7e13470becfbd4454aa080adc77a2996, type: 2}
+  _currentWeapon: {fileID: 11400000, guid: 930bc2d7efc207b4db889068b475e967, type: 2}
   _equipableWeapons:
-  - {fileID: 11400000, guid: 930bc2d7efc207b4db889068b475e967, type: 2}
+  - {fileID: 11400000, guid: 7e13470becfbd4454aa080adc77a2996, type: 2}
   - {fileID: 11400000, guid: 93cafebde4be20c48903945297942584, type: 2}
   _attackRadiusTransform: {fileID: 239399361}
   _enemyLayerMask:
@@ -1511,7 +1511,7 @@ GameObject:
   - component: {fileID: 961189580}
   - component: {fileID: 961189582}
   m_Layer: 0
-  m_Name: Lightsaber
+  m_Name: Bow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1558,7 +1558,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: b281ecf331a3e494eb0faff4339a78d4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7996721f04cf84688a77b88ad2e37400, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
