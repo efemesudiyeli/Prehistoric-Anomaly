@@ -71,7 +71,7 @@ public class WeaponSystem : MonoBehaviour
     void Update()
     {
         // Attack Input
-        if (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Space) && GameManager.Instance.IsInputsEnabled && _currentWeapon.IsWeaponEquipped())
+        if ((Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Space)) && GameManager.Instance.IsInputsEnabled && _currentWeapon.IsWeaponEquipped())
         {
             TryAttack();
         }

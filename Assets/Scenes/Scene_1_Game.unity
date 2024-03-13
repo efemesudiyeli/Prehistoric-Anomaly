@@ -241,7 +241,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03de012f5674eac48bf2f585ccbb430e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentWeapon: {fileID: 11400000, guid: 930bc2d7efc207b4db889068b475e967, type: 2}
   _equipableWeapons:
   - {fileID: 11400000, guid: 7e13470becfbd4454aa080adc77a2996, type: 2}
   - {fileID: 11400000, guid: 389fe35b80a284e4aba5ad254365a8d8, type: 2}
@@ -259,6 +258,7 @@ MonoBehaviour:
   rpgSprite: {fileID: 21300000, guid: 9b5c86ebe5a404407b823163ca0f1fc4, type: 3}
   lightsaberSprite: {fileID: 21300000, guid: b281ecf331a3e494eb0faff4339a78d4, type: 3}
   atomicBombSprite: {fileID: 21300000, guid: cd6f8a4f309c74b64b4be3ba7e7c2e35, type: 3}
+  _currentWeapon: {fileID: 11400000, guid: 930bc2d7efc207b4db889068b475e967, type: 2}
 --- !u!95 &39708744
 Animator:
   serializedVersion: 5

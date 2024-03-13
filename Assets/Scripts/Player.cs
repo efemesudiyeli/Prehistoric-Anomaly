@@ -18,8 +18,6 @@ public class Player : MonoBehaviour, IDamageable
         _animator = GetComponent<Animator>();
     }
 
-
-
     void Update()
     {
         if (GameManager.Instance.IsInputsEnabled)

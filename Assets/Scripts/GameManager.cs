@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
         if (_firstTimeline == null || _finalTimeline == null) return;
 
         _firstTimeline.stopped += (PlayableDirector director) => PrepareNextWave();
-        _finalTimeline.stopped += (director) => LoadMainMenu();
+        _finalTimeline.stopped += (director) => LoadCredits();
     }
 
     private void OnDisable()
@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
         if (_firstTimeline == null || _finalTimeline == null) return;
 
         _firstTimeline.stopped -= (PlayableDirector director) => PrepareNextWave();
-        _finalTimeline.stopped -= (director) => LoadMainMenu();
+        _finalTimeline.stopped -= (director) => LoadCredits();
     }
 
     private void PrepareNextWave()
@@ -61,6 +61,11 @@ public class GameManager : MonoBehaviour
         IsInputsEnabled = true;
         _enemySpawner.StartNextWave();
         Debug.Log("Game started.");
+    }
+
+    public void LoadCredits()
+    {
+        SceneManager.LoadScene(2);
     }
 
     public void LoadMainMenu()
