@@ -15,7 +15,8 @@ MonoBehaviour:
   WeaponSettings:
     WeaponName: 
     WeaponType: 4
-    WeaponAttackDamage: 200
+    WeaponAttackDamage: 100
     WeaponAttackSpeed: 2
     WeaponKnockbackPower: 1.5
     WeaponProjectile: {fileID: 8618885100161299167, guid: 0546c05870565459cb9203d049fe8aee, type: 3}
+    WeaponAttackSound: {fileID: 8300000, guid: b10976130125d4b56b5bb05ef6c42280, type: 3}

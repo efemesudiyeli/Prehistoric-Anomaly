@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Dodo : BaseEnemy
 {
+
+
     void Update()
     {
         if (base.IsPlayerInAttackRange())
@@ -15,4 +17,6 @@ public class Dodo : BaseEnemy
             base.MoveTowardsPlayer();
         }
     }
+
+
 }

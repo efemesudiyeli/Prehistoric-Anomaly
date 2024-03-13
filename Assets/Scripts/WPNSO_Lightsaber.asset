@@ -19,3 +19,4 @@ MonoBehaviour:
     WeaponAttackSpeed: 0.5
     WeaponKnockbackPower: 0.1
     WeaponProjectile: {fileID: 0}
+    WeaponAttackSound: {fileID: 8300000, guid: d3e2bd43b2db6492cbe969e7906f35bc, type: 3}

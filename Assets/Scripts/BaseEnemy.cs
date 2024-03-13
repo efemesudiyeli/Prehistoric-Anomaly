@@ -22,9 +22,14 @@ public abstract class BaseEnemy : MonoBehaviour, IDamageable
 
     public event Action OnDie;
 
+    private AudioSource _audioSource;
+    [SerializeField] private AudioClip _hitSound;
+
+
     private void Awake()
     {
         _rigidbody2d = GetComponent<Rigidbody2D>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -39,11 +44,16 @@ public abstract class BaseEnemy : MonoBehaviour, IDamageable
     public void GetHit(float attackDamage)
     {
         _health -= attackDamage;
-        GetKnockback();
         HitReceiver.GetFlashEffect(_spriteRenderer);
         if (_health <= 0)
         {
             Die();
+        }
+        else
+        {
+            GetKnockback();
+            _audioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+            _audioSource.PlayOneShot(_hitSound);
         }
     }
 

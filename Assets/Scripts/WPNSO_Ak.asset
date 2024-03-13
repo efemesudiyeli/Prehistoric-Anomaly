@@ -15,7 +15,8 @@ MonoBehaviour:
   WeaponSettings:
     WeaponName: AK47
     WeaponType: 3
-    WeaponAttackDamage: 40
+    WeaponAttackDamage: 30
     WeaponAttackSpeed: 0.4
     WeaponKnockbackPower: 0.1
     WeaponProjectile: {fileID: 5656604274876396626, guid: a9ed8d2589d5d4872a4d894b75e49eb3, type: 3}
+    WeaponAttackSound: {fileID: 8300000, guid: 93f83501a42624d5cad1e311fcfa4b3a, type: 3}

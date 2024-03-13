@@ -40,6 +40,7 @@ public class WeaponScriptableObject : ScriptableObject
         public float WeaponAttackSpeed;
         public float WeaponKnockbackPower;
         public GameObject WeaponProjectile;
+        public AudioClip WeaponAttackSound;
 
     }
 }

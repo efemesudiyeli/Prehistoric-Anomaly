@@ -12,6 +12,8 @@ public class WeaponSystem : MonoBehaviour
     [SerializeField] private PlayableDirector _timeline;
     [SerializeField] private SpriteRenderer _timelineWeaponSpriteRenderer;
     [SerializeField] private Sprite ak47Sprite, rpgSprite, lightsaberSprite, atomicBombSprite;
+    private AudioSource _audioSource;
+
     public WeaponScriptableObject _currentWeapon;
     private bool _isAttackOnCooldown = false;
     private Animator _animator;
@@ -24,6 +26,7 @@ public class WeaponSystem : MonoBehaviour
 
     private void Awake()
     {
+        _audioSource = GetComponent<AudioSource>();
         _animator = GetComponent<Animator>();
     }
 
@@ -48,6 +51,8 @@ public class WeaponSystem : MonoBehaviour
     {
         Collider2D[] _hitEnemies = Physics2D.OverlapBoxAll(_attackRadiusTransform.position, _attackColliderSize, 0, _enemyLayerMask);
 
+        _audioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+        _audioSource.PlayOneShot(_currentWeapon.WeaponSettings.WeaponAttackSound);
         if (_hitEnemies.Length == 0) return;
         foreach (Collider2D _hit in _hitEnemies)
         {
@@ -58,6 +63,8 @@ public class WeaponSystem : MonoBehaviour
 
     private void RangedAttack()
     {
+        _audioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+        _audioSource.PlayOneShot(_currentWeapon.WeaponSettings.WeaponAttackSound);
         Instantiate(_currentWeapon.WeaponSettings.WeaponProjectile, _attackRadiusTransform.position, _attackRadiusTransform.rotation);
     }
 
