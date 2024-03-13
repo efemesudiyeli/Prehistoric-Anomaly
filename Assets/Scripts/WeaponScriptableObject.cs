@@ -28,7 +28,10 @@ public class WeaponScriptableObject : ScriptableObject
             EMPTY,
             BAT,
             BOW,
+            AK47,
+            RPG,
             LIGHTSABER,
+            ATOMICBOMB
         }
 
         public string WeaponName;

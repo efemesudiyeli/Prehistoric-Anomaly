@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,17 +7,18 @@ public class Player : MonoBehaviour, IDamageable
 {
     [SerializeField] private float _health = 100;
     [SerializeField] private float _moveSpeed = 2f;
-    private Animator _animator;
     [SerializeField] private UIController _uiController;
     [SerializeField] private HitReceiveFlashEffect _hitReceiver;
+    private Animator _animator;
     private SpriteRenderer _spriteRenderer;
-
 
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
     }
+
+
 
     void Update()
     {
@@ -33,10 +35,10 @@ public class Player : MonoBehaviour, IDamageable
         _hitReceiver.GetFlashEffect(_spriteRenderer);
         if (_health <= 0)
         {
+            GameManager.Instance.LoadMainMenu();
             Destroy(gameObject);
         }
     }
-
 
     private void Move()
     {

@@ -148,6 +148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55eeb9c5abccf4642b753a298f17f991, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _weaponSystem: {fileID: 11400000, guid: 7e13470becfbd4454aa080adc77a2996, type: 2}
+  _projectileSpeed: 1000
 --- !u!61 &6048700411808220152
 BoxCollider2D:
   m_ObjectHideFlags: 0

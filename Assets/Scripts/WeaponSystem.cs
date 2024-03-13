@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class WeaponSystem : MonoBehaviour
 {
-    [SerializeField] public WeaponScriptableObject _currentWeapon;
     [SerializeField] private WeaponScriptableObject[] _equipableWeapons;
     [SerializeField] private Transform _attackRadiusTransform;
     [SerializeField] private LayerMask _enemyLayerMask;
     [SerializeField] private Vector2 _attackColliderSize = new Vector2(1f, 0.5f);
-
+    [SerializeField] private PlayableDirector _timeline;
+    [SerializeField] private SpriteRenderer _timelineWeaponSpriteRenderer;
+    [SerializeField] private Sprite ak47Sprite, rpgSprite, lightsaberSprite, atomicBombSprite;
+    public WeaponScriptableObject _currentWeapon;
     private bool _isAttackOnCooldown = false;
     private Animator _animator;
     private bool _isBatEquipped = true;
@@ -55,7 +58,7 @@ public class WeaponSystem : MonoBehaviour
 
     private void RangedAttack()
     {
-       Instantiate( _currentWeapon.WeaponSettings.WeaponProjectile, _attackRadiusTransform.position, _attackRadiusTransform.rotation);
+        Instantiate(_currentWeapon.WeaponSettings.WeaponProjectile, _attackRadiusTransform.position, _attackRadiusTransform.rotation);
     }
 
     private IEnumerator AttackCooldown()
@@ -68,56 +71,57 @@ public class WeaponSystem : MonoBehaviour
     void Update()
     {
         // Attack Input
-        if (Input.GetKeyDown(KeyCode.Mouse0) && GameManager.Instance.IsInputsEnabled && _currentWeapon.IsWeaponEquipped())
+        if (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Space) && GameManager.Instance.IsInputsEnabled && _currentWeapon.IsWeaponEquipped())
         {
             TryAttack();
         }
 
-
-        if (GameManager.Instance.GameState == GameManager.GameStates.BOW && _isBowEquipped == false)
+        switch (GameManager.Instance.GameState)
         {
-            _isBatEquipped = false;
-            _isBowEquipped = true;
-            _animator.SetBool("isBatEquipped", _isBatEquipped);
-            _animator.SetBool("isBowEquipped", _isBowEquipped);
-            ChangeWeapon(_equipableWeapons[0]); //BOW
+            case GameManager.GameStates.BOW when _isBowEquipped == false:
+                GameManager.Instance.IsInputsEnabled = false;
+                _timeline.Play();
+                _isBatEquipped = false;
+                _isBowEquipped = true;
+                _animator.SetBool("isBatEquipped", _isBatEquipped);
+                _animator.SetBool("isBowEquipped", _isBowEquipped);
+                ChangeWeapon(_equipableWeapons[0]); //BOW
+                break;
+            case GameManager.GameStates.AK47 when _isAkEquipped == false:
+                GameManager.Instance.IsInputsEnabled = false;
+                _timelineWeaponSpriteRenderer.sprite = ak47Sprite;
+                _timeline.Play();
+                _isBowEquipped = false;
+                _isAkEquipped = true;
+                _animator.SetBool("isBowEquipped", _isBowEquipped);
+                _animator.SetBool("isAkEquipped", _isAkEquipped);
+                ChangeWeapon(_equipableWeapons[1]);
+                break;
+            case GameManager.GameStates.RPG when _isRPGEquipped == false:
+                GameManager.Instance.IsInputsEnabled = false;
+                _timelineWeaponSpriteRenderer.sprite = rpgSprite;
+                _timeline.Play();
+                _isAkEquipped = false;
+                _isRPGEquipped = true;
+                _animator.SetBool("isAkEquipped", _isAkEquipped);
+                _animator.SetBool("isRpgEquipped", _isRPGEquipped);
+                ChangeWeapon(_equipableWeapons[2]);
+                break;
+            case GameManager.GameStates.LIGHTSABER when _isLightsaberEquipped == false:
+                GameManager.Instance.IsInputsEnabled = false;
+                _timelineWeaponSpriteRenderer.sprite = lightsaberSprite;
+                _timeline.Play();
+                _isRPGEquipped = false;
+                _isLightsaberEquipped = true;
+                _animator.SetBool("isRpgEquipped", _isRPGEquipped);
+                _animator.SetBool("isLightsaberEquipped", _isLightsaberEquipped);
+                ChangeWeapon(_equipableWeapons[3]);
+                break;
+            case GameManager.GameStates.ATOMICBOMB when _isAtomicBombEquipped == false:
+                GameManager.Instance.IsInputsEnabled = false;
+                GameManager.Instance.PlayFinalCutscene();
+                break;
         }
-
-        if (GameManager.Instance.GameState == GameManager.GameStates.AK47 && _isAkEquipped == false)
-        {
-            _isBowEquipped = false;
-            _isAkEquipped = true;
-            _animator.SetBool("isBowEquipped", _isBowEquipped);
-            _animator.SetBool("isAkEquipped", _isAkEquipped);
-            ChangeWeapon(_equipableWeapons[1]);
-        }
-        if (GameManager.Instance.GameState == GameManager.GameStates.RPG && _isRPGEquipped == false)
-        {
-            _isAkEquipped = false;
-            _isRPGEquipped = true;
-            _animator.SetBool("isBowEquipped", _isBowEquipped);
-            _animator.SetBool("isAkEquipped", _isRPGEquipped);
-            ChangeWeapon(_equipableWeapons[2]);
-        }
-        if (GameManager.Instance.GameState == GameManager.GameStates.LIGHTSABER && _isLightsaberEquipped == false)
-        {
-            _isRPGEquipped = false;
-            _isLightsaberEquipped = true;
-            _animator.SetBool("isBowEquipped", _isBowEquipped);
-            _animator.SetBool("isAkEquipped", _isLightsaberEquipped);
-            ChangeWeapon(_equipableWeapons[3]);
-        }
-        if (GameManager.Instance.GameState == GameManager.GameStates.ATOMICBOMB && _isAtomicBombEquipped == false)
-        {
-            _isLightsaberEquipped = false;
-            _isAtomicBombEquipped = true;
-            _animator.SetBool("isBowEquipped", _isBowEquipped);
-            _animator.SetBool("isAkEquipped", _isAtomicBombEquipped);
-            ChangeWeapon(_equipableWeapons[4]);
-        }
-
-       
-
     }
 
     private void OnDrawGizmosSelected()

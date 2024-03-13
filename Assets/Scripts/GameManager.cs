@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
@@ -10,9 +11,11 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+
         if (Instance == null)
         {
             Instance = this;
+
         }
         else
         {
@@ -22,7 +25,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private EnemySpawner _enemySpawner;
     [SerializeField] private EnemySpawnerDataScriptableObject _enemySpawnerData;
-    [SerializeField] private PlayableDirector _firstTimeline;
+    [SerializeField] private PlayableDirector _firstTimeline, _finalTimeline;
 
     public bool IsInputsEnabled { get; set; } = true;
 
@@ -35,15 +38,34 @@ public class GameManager : MonoBehaviour
         LIGHTSABER,
         ATOMICBOMB,
     }
-    public GameStates GameState { get; private set; } = GameStates.BAT;
+    public GameStates GameState { get; set; } = GameStates.BAT;
 
     private void OnEnable()
     {
-        _firstTimeline.stopped += (PlayableDirector director) =>
-               {
-                   IsInputsEnabled = true;
-                   _enemySpawner.StartNextWave();
-               };
+        if (_firstTimeline == null || _finalTimeline == null) return;
+
+        _firstTimeline.stopped += (PlayableDirector director) => PrepareNextWave();
+        _finalTimeline.stopped += (director) => LoadMainMenu();
+    }
+
+    private void OnDisable()
+    {
+        if (_firstTimeline == null || _finalTimeline == null) return;
+
+        _firstTimeline.stopped -= (PlayableDirector director) => PrepareNextWave();
+        _finalTimeline.stopped -= (director) => LoadMainMenu();
+    }
+
+    private void PrepareNextWave()
+    {
+        IsInputsEnabled = true;
+        _enemySpawner.StartNextWave();
+        Debug.Log("Game started.");
+    }
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 
     public void StartGame()
@@ -56,13 +78,10 @@ public class GameManager : MonoBehaviour
         Application.Quit();
     }
 
-    public void StartFirstTimelineOnce()
+    public void PlayFinalCutscene()
     {
-        if (GameState == GameStates.BAT)
-        {
-            _firstTimeline.Play();
-            IsInputsEnabled = false;
-            GameState = GameStates.BOW;
-        }
+        _finalTimeline.Play();
     }
+
+
 }

@@ -14,10 +14,11 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float _spawnRate = 3f;
     [SerializeField] private bool _isSpawnerActive = true;
     [SerializeField] private List<Transform> _spawnLocations;
+    public int CurrentWave { get; private set; } = 0;
     private Queue<BaseEnemy> _spawnQueue;
     private int _firstWaveEnemyCount;
     private int _deadEnemyCount = 0;
-    public int CurrentWave { get; private set; } = 0;
+
     private void Start()
     {
         StartCoroutine(StartSpawner());
@@ -94,17 +95,15 @@ public class EnemySpawner : MonoBehaviour
         _newEnemy.OnDie += () =>
                {
                    _deadEnemyCount++;
-                   //Debug.Log("deadenemycount: " + _deadEnemyCount + "total enemy count: " + _enemySpawnerData.EnemiesOfWaves[CurrentWave]._spawnList.Count);
-                   if (CurrentWave == 0 && _deadEnemyCount == _firstWaveEnemyCount)
+                   Debug.Log(_deadEnemyCount);
+                   if (_deadEnemyCount == _enemySpawnerData.EnemiesOfWaves[CurrentWave]._spawnList.Count)
                    {
-                       _gameManager.StartFirstTimelineOnce();
+                       if (_gameManager.GameState == GameManager.GameStates.ATOMICBOMB) return;
+                       _gameManager.GameState++;
                        _deadEnemyCount = 0;
-                   }
-                   else if (_deadEnemyCount == _enemySpawnerData.EnemiesOfWaves[CurrentWave]._spawnList.Count)
-                   {
-                       Debug.Log("Next wave started.");
-                       _deadEnemyCount = 0;
-                       StartNextWave();
+                       //    Debug.Log("Next wave started.");
+                       //    _deadEnemyCount = 0;
+                       //    StartNextWave();
                    }
                };
     }

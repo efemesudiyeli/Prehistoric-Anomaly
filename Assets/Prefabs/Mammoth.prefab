@@ -49,7 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
   HitReceiver: {fileID: 0}
-  _health: 100
+  _health: 200
   _attackDamage: 5
   _attackRate: 1
   _attackRange: 1.3

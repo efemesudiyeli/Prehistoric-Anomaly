@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 50d853b4b2981ef44a37793e494a2f19, type: 3}
-  m_Name: Bow
+  m_Name: WPNSO_Bow
   m_EditorClassIdentifier: 
   WeaponSettings:
     WeaponName: Bow
     WeaponType: 2
-    WeaponAttackDamage: 20
+    WeaponAttackDamage: 30
     WeaponAttackSpeed: 1
-    WeaponKnockbackPower: 0.5
+    WeaponKnockbackPower: 0.3
     WeaponProjectile: {fileID: 2141903376556499820, guid: 69a954e4fca734b5384e48f1c39cb1bd, type: 3}

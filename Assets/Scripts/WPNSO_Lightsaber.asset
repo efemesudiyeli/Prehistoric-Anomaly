@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WeaponSettings:
     WeaponName: Lightsaber
-    WeaponType: 3
+    WeaponType: 5
     WeaponAttackDamage: 50
-    WeaponAttackSpeed: 0.3
+    WeaponAttackSpeed: 0.5
     WeaponKnockbackPower: 0.1
+    WeaponProjectile: {fileID: 0}
