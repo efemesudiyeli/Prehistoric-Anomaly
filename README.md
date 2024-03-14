@@ -11,8 +11,14 @@ During the development process, the following technologies and tools were used:
 - Git
 
 ## Screenshots
-Will be updated.
+<div style="display: flex">
+  
+<img src= "https://imgur.com/uJQl1ze.png" width="400px" aspect-ratio="16/9" />
+<img src= "https://imgur.com/0ZqwDMa.png" width="400px" aspect-ratio="16/9" />
+<img src= "https://imgur.com/jwUJzpE.png" width="400px" aspect-ratio="16/9" />
+<img src= "https://imgur.com/T4Fmc6M.png" width="400px" aspect-ratio="16/9" />
 
+</div>
 ## Game Download
-You can download the demo version of the game from the following link: <b>Will be updated.</b>
+You can download the demo version of the game from the following link: <a href="https://awokendev.itch.io/prehistoric-anomaly">Prehistoric Anomaly by awokendev</a>
 
