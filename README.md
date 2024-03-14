@@ -19,6 +19,7 @@ During the development process, the following technologies and tools were used:
 <img src= "https://imgur.com/T4Fmc6M.png" width="400px" aspect-ratio="16/9" />
 
 </div>
+
 ## Game Download
 You can download the demo version of the game from the following link: <a href="https://awokendev.itch.io/prehistoric-anomaly">Prehistoric Anomaly by awokendev</a>
 
